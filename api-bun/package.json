@@ -1,0 +1,28 @@
+{
+  "name": "api-bun",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:a": "bun run src/server-a.js",
+    "start:b": "bun run src/server-b.js",
+    "start:b-pg": "bun run src/server-b-pg.js"
+  },
+  "dependencies": {
+    "pg": "8.23.0"
+  },
+  "overrides": {
+    "pg-connection-string": "2.14.0",
+    "pg-pool": "3.14.0",
+    "pg-protocol": "1.16.0",
+    "pg-types": "2.2.0",
+    "pgpass": "1.0.5",
+    "pg-int8": "1.0.1",
+    "postgres-array": "2.0.0",
+    "postgres-bytea": "1.0.1",
+    "postgres-date": "1.0.7",
+    "postgres-interval": "1.2.0",
+    "split2": "4.2.0",
+    "xtend": "4.0.2",
+    "pg-cloudflare": "1.4.0"
+  }
+}

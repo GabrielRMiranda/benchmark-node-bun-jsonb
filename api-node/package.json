@@ -1,0 +1,12 @@
+{
+  "name": "api-node",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:a": "node src/server-a.js",
+    "start:b": "node src/server-b.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}

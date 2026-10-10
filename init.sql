@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS produtos_node (
+    id    BIGSERIAL PRIMARY KEY,
+    dados JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS produtos_bun (
+    id    BIGSERIAL PRIMARY KEY,
+    dados JSONB NOT NULL
+);

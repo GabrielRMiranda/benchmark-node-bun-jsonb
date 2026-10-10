@@ -1,0 +1,141 @@
+name: tcc-benchmark
+
+x-node-build: &node-build
+  context: .
+  dockerfile: api-node/Dockerfile
+  args:
+    NODE_VERSION: ${NODE_VERSION:-24.21.0}
+
+x-bun-build: &bun-build
+  context: .
+  dockerfile: api-bun/Dockerfile
+  args:
+    BUN_VERSION: ${BUN_VERSION:-1.4.2}
+
+x-database-url: &database-url
+  DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-teste}@postgres:5432/${POSTGRES_DB:-benchmark}
+
+x-api-resources: &api-resources
+  resources:
+    limits:
+      cpus: "2"
+      memory: ${API_MEMORY:-3G}
+
+services:
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16.13}-alpine
+    container_name: pg-teste
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-teste}
+      POSTGRES_DB: ${POSTGRES_DB:-benchmark}
+    ports:
+      - "${PG_HOST_PORT:-5433}:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ${POSTGRES_DB:-benchmark}"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+
+  api-node-b:
+    build: *node-build
+    image: tcc-benchmark/api-node:${NODE_VERSION:-24.21.0}
+    container_name: api-node-b
+    command: ["node", "src/server-b.js"]
+    environment:
+      <<: *database-url
+      PORT: 3001
+      DIAGNOSTICO: ${DIAGNOSTICO:-}
+      SERVER_KEEPALIVE_MS: ${SERVER_KEEPALIVE_MS:-}
+      SERVER_HEADERS_MS: ${SERVER_HEADERS_MS:-}
+      SERVER_REQUEST_MS: ${SERVER_REQUEST_MS:-}
+      SERVER_BODY_MODE: ${SERVER_BODY_MODE:-}
+    ports:
+      - "${API_NODE_B_HOST_PORT:-3001}:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      <<: *api-resources
+
+  api-bun-b:
+    build: *bun-build
+    image: tcc-benchmark/api-bun:${BUN_VERSION:-1.4.2}
+    container_name: api-bun-b
+    command: ["bun", "run", "src/server-b.js"]
+    environment:
+      <<: *database-url
+      PORT: 3002
+    ports:
+      - "${API_BUN_B_HOST_PORT:-3002}:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      <<: *api-resources
+
+  api-bun-pg-b:
+    image: tcc-benchmark/api-bun:${BUN_VERSION:-1.4.2}
+    container_name: api-bun-pg-b
+    command: ["bun", "run", "src/server-b-pg.js"]
+    environment:
+      <<: *database-url
+      PORT: 3003
+    ports:
+      - "${API_BUN_PG_B_HOST_PORT:-3003}:3003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      <<: *api-resources
+
+  api-node-a:
+    image: tcc-benchmark/api-node:${NODE_VERSION:-24.21.0}
+    container_name: api-node-a
+    command: ["node", "src/server-a.js"]
+    environment:
+      PORT: 3011
+      DIAGNOSTICO: ${DIAGNOSTICO:-}
+      SERVER_KEEPALIVE_MS: ${SERVER_KEEPALIVE_MS:-}
+      SERVER_HEADERS_MS: ${SERVER_HEADERS_MS:-}
+      SERVER_REQUEST_MS: ${SERVER_REQUEST_MS:-}
+      SERVER_BODY_MODE: ${SERVER_BODY_MODE:-}
+    ports:
+      - "${API_NODE_A_HOST_PORT:-3011}:3011"
+    deploy:
+      <<: *api-resources
+
+  api-bun-a:
+    image: tcc-benchmark/api-bun:${BUN_VERSION:-1.4.2}
+    container_name: api-bun-a
+    command: ["bun", "run", "src/server-a.js"]
+    environment:
+      PORT: 3012
+    ports:
+      - "${API_BUN_A_HOST_PORT:-3012}:3012"
+    deploy:
+      <<: *api-resources
+
+  k6:
+    profiles: ["tools"]
+    image: grafana/k6:${K6_VERSION:-2.3.0}
+    user: "${K6_UID:-0}:${K6_GID:-0}"
+    volumes:
+      - ./k6:/k6:ro
+      - ./payloads:/payloads:ro
+      - ${RESULTS_DIR:-./resultados}:/resultados
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 6G
+
+volumes:
+  pg_data:
