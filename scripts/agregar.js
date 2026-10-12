@@ -171,18 +171,36 @@ function nivelETempoDaMorte(resultado, amostras_vivas) {
   return { nivel: resultado._meta.vu_levels[indice], tempo: tempo_s.toFixed(1) };
 }
 
-function causaDaMorte(estado, arquivo_log, morreu) {
+function lerTexto(arquivo) {
+  try {
+    return fs.readFileSync(arquivo, 'utf8');
+  } catch (_) {
+    return null;
+  }
+}
+
+// Erro fatal do runtime registrado no log da API. O tempo vem do último registro de GC do V8,
+// em ms desde o início do processo (alguns segundos antes do início do teste de carga).
+function erroFatalNoLog(log) {
+  if (!log || !/FATAL ERROR/.test(log)) return null;
+  const tempos = [...log.matchAll(/\]\s+(\d+) ms:/g)].map((achado) => Number(achado[1]));
+  return {
+    heap_v8: /JavaScript heap out of memory/.test(log),
+    tempo_processo_s: tempos.length ? tempos[tempos.length - 1] / 1000 : null,
+  };
+}
+
+function causaDaMorte(estado, log, fatal, morreu) {
   if (!morreu) return '';
   if (/OOMKilled=true/.test(estado)) return 'oom_kernel_limite_conteiner';
-  let log = '';
-  try { log = fs.readFileSync(arquivo_log, 'utf8'); } catch (_) { return 'desconhecida_sem_log'; }
-  if (/JavaScript heap out of memory/.test(log)) return 'limite_heap_v8';
+  if (log === null) return 'desconhecida_sem_log';
+  if (fatal && fatal.heap_v8) return 'limite_heap_v8';
   if (/out of memory|OutOfMemory/i.test(log)) return 'falta_de_memoria_runtime';
   return 'outra';
 }
 
 function gerarLinhasDeMortes(repeticoes) {
-  const linhas = ['cenario,payload,runtime,rep,oom_killed,morreu,exit_code,causa,nivel_na_morte,tempo_morte_s,mem_max_mb'];
+  const linhas = ['cenario,payload,runtime,rep,oom_killed,morreu,processo_travado,exit_code,causa,nivel_na_morte,tempo_morte_s,fonte_tempo,mem_max_mb'];
   for (const repeticao of repeticoes) {
     const manifesto = lerJson(path.join(pasta_base, repeticao, 'execucao.json')) || [];
     for (const entrada of manifesto) {
@@ -190,30 +208,44 @@ function gerarLinhasDeMortes(repeticoes) {
       if (!partes) continue;
       const [, cenario, runtime, payload] = partes;
       const estado = entrada.apiEstado || '';
-      const morreu = /Status=exited/.test(estado);
       const pasta = path.join(pasta_base, repeticao, runtime);
       const resultado = lerJson(path.join(pasta, `resultado_${entrada.rodada}.json`));
       const stats = lerJson(path.join(pasta, `stats_${entrada.rodada}.json`));
-      const causa = causaDaMorte(estado, path.join(pasta_base, repeticao, 'logs', `api_${entrada.rodada}.log`), morreu);
+      const log = lerTexto(path.join(pasta_base, repeticao, 'logs', `api_${entrada.rodada}.log`));
+      const fatal = erroFatalNoLog(log);
+      const saiu = /Status=exited/.test(estado);
+      // Depois do erro fatal o processo pode ficar travado, sem atender, com o contêiner ainda de pé.
+      const morreu = saiu || fatal !== null;
+      const travado = !saiu && fatal !== null;
+      const causa = causaDaMorte(estado, log, fatal, morreu);
 
       let nivel = '';
       let tempo = '';
+      let fonte = '';
       let mem_max = '';
-      if (stats && stats.amostras && stats.amostras.length) {
-        const vivas = stats.amostras.filter((amostra) => amostra.mem_uso_mb > 0);
-        mem_max = Math.max(...vivas.map((amostra) => amostra.mem_uso_mb)).toFixed(1);
-        if (morreu && resultado && resultado._meta && vivas.length) {
+      const vivas = stats && stats.amostras ? stats.amostras.filter((amostra) => amostra.mem_uso_mb > 0) : [];
+      if (vivas.length) mem_max = Math.max(...vivas.map((amostra) => amostra.mem_uso_mb)).toFixed(1);
+      if (morreu && resultado && resultado._meta) {
+        const meta = resultado._meta;
+        if (fatal && fatal.tempo_processo_s !== null) {
+          const indice = Math.min(meta.vu_levels.length - 1, Math.floor(fatal.tempo_processo_s / (meta.ramp_s + meta.sustain_s)));
+          nivel = meta.vu_levels[indice];
+          tempo = fatal.tempo_processo_s.toFixed(1);
+          fonte = 'log_erro_fatal';
+        } else if (vivas.length) {
           const morte = nivelETempoDaMorte(resultado, vivas);
           nivel = morte.nivel;
           tempo = morte.tempo;
+          fonte = 'fim_das_amostras';
         }
       }
       linhas.push([
         cenario, payload, runtime, repeticao,
         /OOMKilled=true/.test(estado) ? 1 : 0,
         morreu ? 1 : 0,
+        travado ? 1 : 0,
         /ExitCode=(\d+)/.exec(estado)?.[1] ?? '',
-        causa, nivel, tempo, mem_max,
+        causa, nivel, tempo, fonte, mem_max,
       ].join(','));
     }
   }
