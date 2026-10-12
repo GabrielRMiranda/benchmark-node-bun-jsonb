@@ -22,7 +22,11 @@ param(
   [switch]$Restaurar,
   [switch]$ManterClaude,
   [switch]$SemReiniciarDocker,
-  [switch]$IgnorarBateria
+  [switch]$IgnorarBateria,
+  [string]$Cenarios = '',
+  [string]$Payloads = '',
+  [string]$Runtimes = '',
+  [int]$NodeHeapMb = 0
 )
 
 $ErrorActionPreference = 'Continue'
@@ -278,6 +282,7 @@ $pastaPreparacao = Join-Path $raiz (Join-Path $OutBase 'preparacao')
 New-Item -ItemType Directory -Force -Path $pastaPreparacao | Out-Null
 $carimbo = Get-Date -Format 'yyyyMMdd-HHmm'
 $rotulo = if ($SoPreparar) { 'so_preparar' } else { 'ate_rep{0:D2}' -f $N }
+if ($NodeHeapMb -gt 0) { $rotulo += "_heap$NodeHeapMb" }
 $arquivoRetrato = Join-Path $pastaPreparacao "bloco_${rotulo}_$carimbo.txt"
 $processos = Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 25 `
   ProcessName, Id, @{ n = 'MemoriaMB'; e = { [math]::Round($_.WorkingSet64 / 1MB) } }, @{ n = 'CpuSegundos'; e = { [math]::Round($_.CPU, 1) } }
@@ -311,6 +316,16 @@ $concluidas = @(Get-ChildItem -Path $pastaBase -Directory -Filter 'rep*' -ErrorA
   Where-Object { Test-Path (Join-Path $_.FullName '.completo') }).Count
 $faltam = [math]::Max(0, $N - $concluidas)
 
+$listaCenarios = if ($Cenarios) { $Cenarios -split ',' } else { @('A', 'B') }
+$quantosPayloads = if ($Payloads) { ($Payloads -split ',').Count } else { 3 }
+$listaRuntimes = if ($Runtimes) { $Runtimes -split ',' } else { @('node', 'bun', 'bunpg') }
+$rodadasPorRepeticao = 0
+foreach ($cenario in $listaCenarios) {
+  foreach ($runtime in $listaRuntimes) {
+    if (-not ($runtime.Trim() -eq 'bunpg' -and $cenario.Trim().ToUpper() -eq 'A')) { $rodadasPorRepeticao += $quantosPayloads }
+  }
+}
+$minutosPorRepeticao = [math]::Ceiling($rodadasPorRepeticao * 6.2)
 $previsao = (Get-Date).AddMinutes($faltam * $minutosPorRepeticao)
 
 Escrever ("Repetições concluídas: $concluidas. Este bloco roda $faltam (previsão de término: " + $previsao.ToString('dd/MM HH:mm') + ').') 'Cyan'
@@ -330,7 +345,13 @@ $codigo = 1
 try {
   [void][TCC.Energia]::SetThreadExecutionState($ES_CONTINUOUS -bor $ES_SYSTEM_REQUIRED)
   
-  & node scripts/rodar_repeticoes.js --n $N --out-base $OutBase --gomemlimit $GoMemLimit --shuffle
+  $argumentos = @('scripts/rodar_repeticoes.js', '--n', $N, '--out-base', $OutBase, '--gomemlimit', $GoMemLimit, '--shuffle')
+  if ($Cenarios) { $argumentos += @('--scenarios', $Cenarios) }
+  if ($Payloads) { $argumentos += @('--payloads', $Payloads) }
+  if ($Runtimes) { $argumentos += @('--runtimes', $Runtimes) }
+  if ($NodeHeapMb -gt 0) { $argumentos += @('--node-heap-mb', $NodeHeapMb) }
+  Escrever ('node ' + ($argumentos -join ' '))
+  & node @argumentos
   
   $codigo = $LASTEXITCODE
 } finally {

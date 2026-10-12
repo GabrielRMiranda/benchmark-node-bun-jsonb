@@ -66,6 +66,14 @@ function montarComandoK6(cfg, rodada) {
   ];
 }
 
+// Limite efetivo de heap do V8 dentro do contêiner (null para as APIs Bun).
+function limiteDeHeapNode(container) {
+  if (!container.startsWith('api-node')) return null;
+  const resposta = docker(['exec', container, 'node', '-e', "console.log(require('v8').getHeapStatistics().heap_size_limit)"]);
+  const bytes = Number((resposta.stdout || '').trim());
+  return resposta.status === 0 && bytes > 0 ? Math.round(bytes / 2 ** 20) : null;
+}
+
 async function executarRodada(cfg, rodada) {
   const pasta_logs = path.join(cfg.pasta_saida, 'logs');
   fs.mkdirSync(path.join(cfg.pasta_saida, rodada.runtime), { recursive: true });
@@ -76,6 +84,8 @@ async function executarRodada(cfg, rodada) {
   registrar(`--- RODADA ${rodada.nome} (${rodada.servico.nome}, script=${script_k6}${detalhe_gomemlimit}${detalhe_vus})`);
 
   await subirApi(cfg, rodada.cenario, rodada.servico);
+  const heap_limite_mb = limiteDeHeapNode(rodada.servico.nome);
+  if (heap_limite_mb !== null) registrar(`limite de heap do V8 na API: ${heap_limite_mb} MiB`);
 
   const sentinela = path.join(pasta_logs, `stop_${rodada.nome}`);
   fs.rmSync(sentinela, { force: true });
@@ -120,6 +130,7 @@ async function executarRodada(cfg, rodada) {
     resultado: tem_resultado,
     stats: tem_stats,
     apiEstado: estado_api,
+    heapLimiteMb: heap_limite_mb,
     ok: k6_exit === 0 && tem_resultado && tem_stats,
     inicio: inicio.toISOString(),
     fim: new Date().toISOString(),

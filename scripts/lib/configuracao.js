@@ -23,6 +23,10 @@ Gerador de carga (k6)
   --gomemlimit <valor>            limita a memória do k6 (ex.: 5000MiB)
   --vus <lista>                   substitui os níveis de VU padrão (10,20,40,80,160,320,640,1280)
 
+APIs
+  --node-heap-mb <MiB>            limite de heap do V8 nas APIs Node (--max-old-space-size). Sem a opção,
+                                  vale o padrão do Node, calculado a partir da memória do contêiner
+
 Execução
   --out <diretório>               destino dos resultados (padrão: resultados/run-<host>-<data>).
                                   Reutilize o mesmo --out para retomar uma execução interrompida
@@ -84,7 +88,10 @@ function montarConfiguracao(args) {
   for (const runtime of runtimes) if (!runtimes_validos.includes(runtime)) falhar(`runtime inválido: ${runtime}`);
 
   const pasta_saida = path.resolve(raiz, args.out || path.join('resultados', `run-${os.hostname().toLowerCase()}-${carimboDeTempo()}`));
-  const env_compose = { ...process.env, RESULTS_DIR: pasta_saida };
+  const node_heap_mb = args['node-heap-mb'] !== undefined ? Number(args['node-heap-mb']) : null;
+  if (node_heap_mb !== null && !(Number.isInteger(node_heap_mb) && node_heap_mb > 0)) falhar('--node-heap-mb deve ser um inteiro positivo (MiB)');
+  // Sempre definido, para que um NODE_OPTIONS_API do ambiente não mude as APIs sem ficar registrado.
+  const env_compose = { ...process.env, RESULTS_DIR: pasta_saida, NODE_OPTIONS_API: node_heap_mb ? `--max-old-space-size=${node_heap_mb}` : '' };
   if (typeof process.getuid === 'function') {
     env_compose.K6_UID = String(process.getuid());
     env_compose.K6_GID = String(process.getgid());
@@ -110,6 +117,7 @@ function montarConfiguracao(args) {
     forcar: Boolean(args.force),
     gomemlimit: args.gomemlimit || null,
     vus: args.vus || null,
+    node_heap_mb,
     cooldown_s: args.cooldown !== undefined ? Number(args.cooldown) : 30,
     banco: lerVariavel('POSTGRES_DB', 'benchmark'),
     versoes: {

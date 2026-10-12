@@ -171,8 +171,18 @@ function nivelETempoDaMorte(resultado, amostras_vivas) {
   return { nivel: resultado._meta.vu_levels[indice], tempo: tempo_s.toFixed(1) };
 }
 
+function causaDaMorte(estado, arquivo_log, morreu) {
+  if (!morreu) return '';
+  if (/OOMKilled=true/.test(estado)) return 'oom_kernel_limite_conteiner';
+  let log = '';
+  try { log = fs.readFileSync(arquivo_log, 'utf8'); } catch (_) { return 'desconhecida_sem_log'; }
+  if (/JavaScript heap out of memory/.test(log)) return 'limite_heap_v8';
+  if (/out of memory|OutOfMemory/i.test(log)) return 'falta_de_memoria_runtime';
+  return 'outra';
+}
+
 function gerarLinhasDeMortes(repeticoes) {
-  const linhas = ['cenario,payload,runtime,rep,oom_killed,morreu,exit_code,nivel_na_morte,tempo_morte_s,mem_max_mb'];
+  const linhas = ['cenario,payload,runtime,rep,oom_killed,morreu,exit_code,causa,nivel_na_morte,tempo_morte_s,mem_max_mb'];
   for (const repeticao of repeticoes) {
     const manifesto = lerJson(path.join(pasta_base, repeticao, 'execucao.json')) || [];
     for (const entrada of manifesto) {
@@ -184,6 +194,7 @@ function gerarLinhasDeMortes(repeticoes) {
       const pasta = path.join(pasta_base, repeticao, runtime);
       const resultado = lerJson(path.join(pasta, `resultado_${entrada.rodada}.json`));
       const stats = lerJson(path.join(pasta, `stats_${entrada.rodada}.json`));
+      const causa = causaDaMorte(estado, path.join(pasta_base, repeticao, 'logs', `api_${entrada.rodada}.log`), morreu);
 
       let nivel = '';
       let tempo = '';
@@ -202,7 +213,7 @@ function gerarLinhasDeMortes(repeticoes) {
         /OOMKilled=true/.test(estado) ? 1 : 0,
         morreu ? 1 : 0,
         /ExitCode=(\d+)/.exec(estado)?.[1] ?? '',
-        nivel, tempo, mem_max,
+        causa, nivel, tempo, mem_max,
       ].join(','));
     }
   }
@@ -568,6 +579,13 @@ function main() {
   console.log(`Decomposição B − A: decomposicao.csv (${decomposicao.deltas.length}) e decomposicao_comparacao.csv (${decomposicao.diferencas.length})`);
 }
 
+function carregarObservacoes(base) {
+  pasta_base = path.resolve(base);
+  const repeticoes = listarRepeticoes();
+  const payloads = descobrirPayloads(repeticoes);
+  return { repeticoes, payloads, ...coletarObservacoes(repeticoes, payloads) };
+}
+
 if (require.main === module) main();
 
-module.exports = { pontoDeSaturacao, primeiroNivelComErro, contrasteDeRazoes, calcularSaturacao, calcularInteracoes, calcularDecomposicao, criterio_saturacao };
+module.exports = { carregarObservacoes, metricas_descritivas, pontoDeSaturacao, primeiroNivelComErro, contrasteDeRazoes, calcularSaturacao, calcularInteracoes, calcularDecomposicao, criterio_saturacao };

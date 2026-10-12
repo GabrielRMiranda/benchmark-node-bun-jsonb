@@ -57,6 +57,7 @@ services:
       SERVER_HEADERS_MS: ${SERVER_HEADERS_MS:-}
       SERVER_REQUEST_MS: ${SERVER_REQUEST_MS:-}
       SERVER_BODY_MODE: ${SERVER_BODY_MODE:-}
+      NODE_OPTIONS: ${NODE_OPTIONS_API:-}
     ports:
       - "${API_NODE_B_HOST_PORT:-3001}:3001"
     depends_on:
@@ -107,6 +108,7 @@ services:
       SERVER_HEADERS_MS: ${SERVER_HEADERS_MS:-}
       SERVER_REQUEST_MS: ${SERVER_REQUEST_MS:-}
       SERVER_BODY_MODE: ${SERVER_BODY_MODE:-}
+      NODE_OPTIONS: ${NODE_OPTIONS_API:-}
     ports:
       - "${API_NODE_A_HOST_PORT:-3011}:3011"
     deploy:

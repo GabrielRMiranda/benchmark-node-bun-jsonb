@@ -147,6 +147,7 @@ function registrarAmbiente(cfg, info_docker) {
       runtimes: cfg.runtimes,
       gomemlimit: cfg.gomemlimit,
       cooldownS: cfg.cooldown_s,
+      nodeHeapMb: cfg.node_heap_mb,
     },
   };
   fs.writeFileSync(path.join(cfg.pasta_saida, 'ambiente.json'), JSON.stringify(ambiente, null, 2));
