@@ -1,0 +1,10 @@
+[Cenário B / Node] escutando na porta 3001
+
+
+<--- Last few GCs --->
+
+[1:0x7441d6926000]   287152 ms: Scavenge (interleaved) 2808.6 (2820.1) -> 2808.5 (2824.1) MB, pooled: 0 MB, 5.18 / 0.00 ms  (average mu = 0.351, current mu = 0.310) task; 
+[1:0x7441d6926000]   287610 ms: Mark-Compact (reduce) 2813.2 (2826.1) -> 2812.6 (2822.9) MB, pooled: 0 MB, 281.41 / 0.00 ms  (+ 7.0 ms in 41 steps since start of marking, biggest step 5.0 ms, walltime since start of marking 395 ms) (average mu = 0.374, cu
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
