@@ -63,6 +63,16 @@ function criarSchema(cfg) {
   consultarBanco(cfg, ['-v', 'ON_ERROR_STOP=1', '-q'], { input: fs.readFileSync(cfg.sql_inicial, 'utf8') });
 }
 
+// Confere se o documento foi gravado como objeto JSONB (e não como string JSON).
+// Motivo: o Bun.sql grava como string JSON qualquer string passada a um parâmetro jsonb.
+function verificarTipoGravado(cfg, servico) {
+  const resposta = consultarBanco(cfg, ['-tAc',
+    "SELECT coalesce(string_agg(DISTINCT jsonb_typeof(dados), ','), 'vazio') FROM (SELECT dados FROM produtos_node UNION ALL SELECT dados FROM produtos_bun) t;"]);
+  const tipos = (resposta.stdout || '').trim();
+  if (tipos !== 'object') throw new Error(`${servico.nome}: documento gravado como "${tipos}" (esperado "object")`);
+  registrar(`OK   ${servico.nome}: documento gravado como objeto JSONB`);
+}
+
 function truncarTabelas(cfg) {
   consultarBanco(cfg, ['-qc', 'TRUNCATE produtos_node, produtos_bun RESTART IDENTITY;']);
 }
@@ -103,8 +113,11 @@ async function subirApi(cfg, cenario, servico) {
   composeOk(cfg, ['up', '-d', '--force-recreate', '--no-deps', servico.nome]);
   if (!(await aguardarApi(servico.porta_host))) throw new Error(`${servico.nome} não respondeu em 60 s`);
   const status = await enviarPostDeTeste(cfg, servico.porta_host);
-  if (cenario === 'B') truncarTabelas(cfg);
   if (status !== 201) throw new Error(`POST de teste em ${servico.nome} retornou ${status} (esperado 201)`);
+  if (cenario === 'B') {
+    verificarTipoGravado(cfg, servico);
+    truncarTabelas(cfg);
+  }
 }
 
 function versaoNaImagem(imagem, entrypoint, argv) {

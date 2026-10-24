@@ -34,7 +34,7 @@ Bun.serve({
     }
 
     try {
-      const resultado = await db`INSERT INTO produtos_bun (dados) VALUES (${JSON.stringify(payload)}::jsonb) RETURNING id`;
+      const resultado = await db`INSERT INTO produtos_bun (dados) VALUES (${payload}::jsonb) RETURNING id`;
       return new Response(JSON.stringify({ id: resultado[0].id }), {
         status: 201,
         headers: { 'Content-Type': 'application/json' },
