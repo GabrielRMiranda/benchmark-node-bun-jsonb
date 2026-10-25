@@ -1,0 +1,16 @@
+cenario,payload,runtime,n_reps,n_nao_saturou,vus_min,vus_mediana,vus_max,motivos,vus_curva_media,motivo_curva_media,vus_erro_1pct_min,vus_erro_1pct_mediana,vus_erro_1pct_max,vus_erro_1pct_curva_media
+cenarioA,grande,bun,10,0,20,20,20,vazao_e_latencia:10,20,vazao_e_latencia,>1280,>1280,>1280,>1280
+cenarioA,grande,node,10,0,20,20,20,vazao_e_latencia:10,20,vazao_e_latencia,160,160,160,160
+cenarioA,medio,bun,10,0,20,20,20,vazao_e_latencia:10,20,vazao_e_latencia,>1280,>1280,>1280,>1280
+cenarioA,medio,node,10,0,20,20,20,vazao_e_latencia:10,20,vazao_e_latencia,1280,1280,1280,1280
+cenarioA,pequeno,bun,10,0,40,40,40,vazao_e_latencia:10,40,vazao_e_latencia,>1280,>1280,>1280,>1280
+cenarioA,pequeno,node,10,0,40,40,40,vazao_e_latencia:10,40,vazao_e_latencia,>1280,>1280,>1280,>1280
+cenarioB,grande,bun,10,0,20,20,40,vazao_e_latencia:10,20,vazao_e_latencia,320,640,640,320
+cenarioB,grande,bunpg,10,0,20,20,40,vazao_e_latencia:10,20,vazao_e_latencia,640,640,640,640
+cenarioB,grande,node,10,0,20,20,40,vazao_e_latencia:10,20,vazao_e_latencia,640,640,640,640
+cenarioB,medio,bun,10,0,80,80,160,vazao_e_latencia:10,80,vazao_e_latencia,>1280,>1280,>1280,>1280
+cenarioB,medio,bunpg,10,0,80,80,80,vazao_e_latencia:10,80,vazao_e_latencia,>1280,>1280,>1280,>1280
+cenarioB,medio,node,10,0,40,80,80,vazao_e_latencia:10,80,vazao_e_latencia,>1280,>1280,>1280,>1280
+cenarioB,pequeno,bun,10,0,40,160,320,vazao_e_latencia:10,40,vazao_e_latencia,>1280,>1280,>1280,>1280
+cenarioB,pequeno,bunpg,10,0,20,200,320,vazao_e_latencia:10,20,vazao_e_latencia,>1280,>1280,>1280,>1280
+cenarioB,pequeno,node,10,0,20,100,320,vazao_e_latencia:10,160,vazao_e_latencia,>1280,>1280,>1280,>1280

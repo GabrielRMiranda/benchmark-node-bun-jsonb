@@ -1,0 +1,1090 @@
+{
+  "tempo_total_ramp_160": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "min": 100.89338599999999,
+      "med": 215.45037000000002,
+      "max": 378.427037,
+      "p(90)": 299.09151940000004,
+      "p(95)": 304.58151405,
+      "p(99)": 366.77980418,
+      "avg": 231.77123209539198
+    }
+  },
+  "tempo_total_sustain_640": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "max": 1307.87384,
+      "p(90)": 1280.0215216,
+      "p(95)": 1286.5955446,
+      "p(99)": 1294.6758345800001,
+      "avg": 1220.9084291339625,
+      "min": 1111.4916839999999,
+      "med": 1208.7322589999999
+    }
+  },
+  "erros_sustain_10": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "fails": 15440,
+      "rate": 0,
+      "passes": 0
+    }
+  },
+  "tempo_total_ramp_640": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "avg": 918.2589331356404,
+      "min": 530.48803,
+      "med": 910.555625,
+      "max": 1296.797272,
+      "p(90)": 1193.877787,
+      "p(95)": 1208.869841,
+      "p(99)": 1278.0572095999999
+    }
+  },
+  "http_req_tls_handshaking": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "min": 0,
+      "med": 0,
+      "max": 0,
+      "p(90)": 0,
+      "p(95)": 0,
+      "p(99)": 0,
+      "avg": 0
+    }
+  },
+  "http_req_waiting": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(95)": 2419.0089469,
+      "p(99)": 2501.7949325199997,
+      "avg": 583.092828342971,
+      "min": 1.444967,
+      "med": 198.50815649999998,
+      "max": 2657.472164,
+      "p(90)": 2213.3827543000016
+    }
+  },
+  "latencia_ok_sustain_20": {
+    "contains": "time",
+    "values": {
+      "avg": 39.50280674604347,
+      "min": 6.154863,
+      "med": 17.362299,
+      "max": 104.599811,
+      "p(90)": 81.743476,
+      "p(95)": 84.90141,
+      "p(99)": 90.129369
+    },
+    "type": "trend"
+  },
+  "latencia_ok_sustain_1280": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(90)": 2503.0896093,
+      "p(95)": 2519.16611415,
+      "p(99)": 2581.85950623,
+      "avg": 2440.326925524184,
+      "min": 2316.889827,
+      "med": 2421.312778,
+      "max": 2659.116151
+    }
+  },
+  "resp_ok_ramp_1280": {
+    "contains": "default",
+    "values": {
+      "count": 5859,
+      "rate": 18.175680632286145
+    },
+    "type": "counter"
+  },
+  "latencia_ok_sustain_10": {
+    "contains": "time",
+    "values": {
+      "p(99)": 76.50562593000001,
+      "avg": 19.27087069449477,
+      "min": 2.688628,
+      "med": 8.3174005,
+      "max": 86.847275,
+      "p(90)": 66.1771007,
+      "p(95)": 70.26306545
+    },
+    "type": "trend"
+  },
+  "latencia_ok_sustain_40": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "med": 84.518895,
+      "max": 551.322368,
+      "p(90)": 103.391112,
+      "p(95)": 109.740695,
+      "p(99)": 122.85592369999996,
+      "avg": 77.70948325645696,
+      "min": 19.497593
+    }
+  },
+  "resp_ok_ramp_640": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 5581,
+      "rate": 17.313274212116227
+    }
+  },
+  "latencia_ok_ramp_80": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(90)": 168.35445540000003,
+      "p(95)": 177.8769048,
+      "p(99)": 196.74562084000019,
+      "avg": 116.18847877142838,
+      "min": 22.848397,
+      "med": 109.625719,
+      "max": 222.166611
+    }
+  },
+  "latencia_sustain_20": {
+    "values": {
+      "med": 17.362299,
+      "max": 104.599811,
+      "p(90)": 81.743476,
+      "p(95)": 84.90141,
+      "p(99)": 90.129369,
+      "avg": 39.50280674604347,
+      "min": 6.154863
+    },
+    "type": "trend",
+    "contains": "time"
+  },
+  "http_req_duration{expected_response:true}": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(99)": 2502.0212381700003,
+      "avg": 583.2720277620747,
+      "min": 2.306106,
+      "med": 198.698638,
+      "max": 2659.116151,
+      "p(90)": 2213.5945358000004,
+      "p(95)": 2419.25241735
+    }
+  },
+  "erros_ramp_40": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 5173
+    }
+  },
+  "erros_ramp_10": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "passes": 0,
+      "fails": 5451,
+      "rate": 0
+    }
+  },
+  "resp_ok_sustain_1280": {
+    "contains": "default",
+    "values": {
+      "rate": 48.72906492096788,
+      "count": 15708
+    },
+    "type": "counter"
+  },
+  "tempo_total_ramp_40": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(95)": 98.4426962,
+      "p(99)": 115.00590779999999,
+      "avg": 57.34752078213796,
+      "min": 7.686364,
+      "med": 72.619045,
+      "max": 155.346249,
+      "p(90)": 92.7787758
+    }
+  },
+  "erros_sustain_640": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 15699
+    }
+  },
+  "latencia_ok_ramp_640": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "med": 910.551881,
+      "max": 1296.794472,
+      "p(90)": 1193.874985,
+      "p(95)": 1208.867028,
+      "p(99)": 1278.054788,
+      "avg": 918.2256754638961,
+      "min": 530.487019
+    }
+  },
+  "tempo_total_ramp_1280": {
+    "values": {
+      "avg": 1841.68678221215,
+      "min": 1200.741368,
+      "med": 1823.1119999999999,
+      "max": 2491.3122329999997,
+      "p(90)": 2294.3310520000005,
+      "p(95)": 2367.5785225,
+      "p(99)": 2484.1235557200002
+    },
+    "type": "trend",
+    "contains": "time"
+  },
+  "erros_sustain_40": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 15371
+    }
+  },
+  "latencia_ramp_20": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "avg": 28.177431896010802,
+      "min": 3.427891,
+      "med": 12.0792805,
+      "max": 95.316849,
+      "p(90)": 74.8505479,
+      "p(95)": 78.87912105,
+      "p(99)": 85.70116410999998
+    }
+  },
+  "http_req_failed": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 166414
+    }
+  },
+  "latencia_ok_sustain_80": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "avg": 155.9322970011687,
+      "min": 84.522575,
+      "med": 173.48107,
+      "max": 216.235153,
+      "p(90)": 191.1382624,
+      "p(95)": 194.5622384,
+      "p(99)": 202.70513394
+    }
+  },
+  "tempo_total_ramp_10": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "max": 79.305858,
+      "p(90)": 11.36618,
+      "p(95)": 52.923209,
+      "p(99)": 67.26970850000001,
+      "avg": 9.042167200330189,
+      "min": 2.3091660000000003,
+      "med": 4.436216
+    }
+  },
+  "iterations": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 166414,
+      "rate": 516.2464100940889
+    }
+  },
+  "erros_ramp_1280": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 5859
+    }
+  },
+  "tempo_total_sustain_1280": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "med": 2421.3162625,
+      "max": 2659.118307,
+      "p(90)": 2503.0928729,
+      "p(95)": 2519.1695963,
+      "p(99)": 2581.86163351,
+      "avg": 2440.3306263423055,
+      "min": 2316.893615
+    }
+  },
+  "latencia_ramp_80": {
+    "values": {
+      "med": 109.625719,
+      "max": 222.166611,
+      "p(90)": 168.35445540000003,
+      "p(95)": 177.8769048,
+      "p(99)": 196.74562084000019,
+      "avg": 116.18847877142838,
+      "min": 22.848397
+    },
+    "type": "trend",
+    "contains": "time"
+  },
+  "tempo_total_ramp_320": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "max": 731.323971,
+      "p(90)": 594.8320236,
+      "p(95)": 602.3815436,
+      "p(99)": 662.3183024300002,
+      "avg": 461.2055799670385,
+      "min": 252.131606,
+      "med": 474.0524705
+    }
+  },
+  "latencia_ok_sustain_160": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "min": 208.050047,
+      "med": 305.275499,
+      "max": 402.091789,
+      "p(90)": 372.495171,
+      "p(95)": 379.12246425,
+      "p(99)": 390.8007865,
+      "avg": 314.14249749193715
+    }
+  },
+  "erros_sustain_320": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 15449
+    }
+  },
+  "tempo_total_sustain_20": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(95)": 84.904361,
+      "p(99)": 90.154692,
+      "avg": 39.50688237653118,
+      "min": 6.157731,
+      "med": 17.365428,
+      "max": 104.602693,
+      "p(90)": 81.745258
+    }
+  },
+  "tempo_total_sustain_40": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "avg": 77.71312625040653,
+      "min": 19.499021,
+      "med": 84.519941,
+      "max": 551.324768,
+      "p(90)": 103.397933,
+      "p(95)": 109.74380400000001,
+      "p(99)": 122.86026509999996
+    }
+  },
+  "resp_ok_ramp_20": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 5164,
+      "rate": 16.019664581861353
+    }
+  },
+  "tempo_total_sustain_160": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "med": 305.2791465,
+      "max": 402.092943,
+      "p(90)": 372.49781399999995,
+      "p(95)": 379.1257025,
+      "p(99)": 390.80335305000006,
+      "avg": 314.1465572695979,
+      "min": 208.053088
+    }
+  },
+  "latencia_sustain_160": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(95)": 379.12246425,
+      "p(99)": 390.8007865,
+      "avg": 314.14249749193715,
+      "min": 208.050047,
+      "med": 305.275499,
+      "max": 402.091789,
+      "p(90)": 372.495171
+    }
+  },
+  "latencia_ok_ramp_160": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "max": 378.426017,
+      "p(90)": 299.0893778,
+      "p(95)": 304.57988819999997,
+      "p(99)": 366.77826601,
+      "avg": 231.75585272277257,
+      "min": 100.890886,
+      "med": 215.414208
+    }
+  },
+  "http_reqs": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 166414,
+      "rate": 516.2464100940889
+    }
+  },
+  "latencia_ok_sustain_640": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "med": 1208.729474,
+      "max": 1307.872947,
+      "p(90)": 1280.0129346,
+      "p(95)": 1286.5942036,
+      "p(99)": 1294.6688025199999,
+      "avg": 1220.9038279250262,
+      "min": 1111.489099
+    }
+  },
+  "resp_ok_sustain_320": {
+    "contains": "default",
+    "values": {
+      "count": 15449,
+      "rate": 47.92559994678079
+    },
+    "type": "counter"
+  },
+  "resp_ok_sustain_40": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 15371,
+      "rate": 47.68362980011442
+    }
+  },
+  "erros_ramp_640": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 5581
+    }
+  },
+  "vus": {
+    "type": "gauge",
+    "contains": "default",
+    "values": {
+      "max": 1280,
+      "value": 39,
+      "min": 1
+    }
+  },
+  "resp_ok_sustain_80": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "rate": 47.75808215293484,
+      "count": 15395
+    }
+  },
+  "resp_ok_ramp_80": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 5145,
+      "rate": 15.960723135878515
+    }
+  },
+  "latencia_sustain_1280": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "min": 2316.889827,
+      "med": 2421.312778,
+      "max": 2659.116151,
+      "p(90)": 2503.0896093,
+      "p(95)": 2519.16611415,
+      "p(99)": 2581.85950623,
+      "avg": 2440.3269255241844
+    }
+  },
+  "http_req_sending": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "min": 0.027501,
+      "med": 0.0790865,
+      "max": 11.6734,
+      "p(90)": 0.154381,
+      "p(95)": 0.2089457,
+      "p(99)": 1.6453313199999997,
+      "avg": 0.12218008996839187
+    }
+  },
+  "erros_sustain_1280": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "passes": 0,
+      "fails": 15708,
+      "rate": 0
+    }
+  },
+  "tempo_total_sustain_10": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(90)": 66.1805668,
+      "p(95)": 70.2649979,
+      "p(99)": 76.50844368000001,
+      "avg": 19.2739073976036,
+      "min": 2.691285,
+      "med": 8.321488,
+      "max": 86.848925
+    }
+  },
+  "resp_ok_sustain_10": {
+    "contains": "default",
+    "values": {
+      "count": 15440,
+      "rate": 47.897680314473135
+    },
+    "type": "counter"
+  },
+  "latencia_sustain_640": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(95)": 1286.5942036,
+      "p(99)": 1294.6688025199999,
+      "avg": 1220.9038279250262,
+      "min": 1111.489099,
+      "med": 1208.729474,
+      "max": 1307.872947,
+      "p(90)": 1280.0129346
+    }
+  },
+  "data_received": {
+    "values": {
+      "count": 21189887,
+      "rate": 65734.87263120532
+    },
+    "type": "counter",
+    "contains": "data"
+  },
+  "latencia_ok_ramp_10": {
+    "values": {
+      "p(99)": 67.26705100000001,
+      "avg": 9.0330044243258,
+      "min": 2.306106,
+      "med": 4.43347,
+      "max": 79.304582,
+      "p(90)": 11.363406,
+      "p(95)": 52.920196000000004
+    },
+    "type": "trend",
+    "contains": "time"
+  },
+  "http_req_duration": {
+    "contains": "time",
+    "values": {
+      "max": 2659.116151,
+      "p(90)": 2213.5945358000004,
+      "p(95)": 2419.25241735,
+      "p(99)": 2502.0212381700003,
+      "avg": 583.2720277620747,
+      "min": 2.306106,
+      "med": 198.698638
+    },
+    "type": "trend"
+  },
+  "tempo_total_sustain_80": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(95)": 194.5646,
+      "p(99)": 202.70802498,
+      "avg": 155.93707097648598,
+      "min": 84.52619,
+      "med": 173.483107,
+      "max": 216.239241,
+      "p(90)": 191.1430714
+    }
+  },
+  "latencia_sustain_80": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "avg": 155.9322970011687,
+      "min": 84.522575,
+      "med": 173.48107,
+      "max": 216.235153,
+      "p(90)": 191.1382624,
+      "p(95)": 194.5622384,
+      "p(99)": 202.70513394
+    }
+  },
+  "resp_ok_ramp_10": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 5451,
+      "rate": 16.90999063433893
+    }
+  },
+  "latencia_ok_ramp_20": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(95)": 78.87912105,
+      "p(99)": 85.70116410999998,
+      "avg": 28.177431896010802,
+      "min": 3.427891,
+      "med": 12.0792805,
+      "max": 95.316849,
+      "p(90)": 74.8505479
+    }
+  },
+  "latencia_sustain_40": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "max": 551.322368,
+      "p(90)": 103.391112,
+      "p(95)": 109.740695,
+      "p(99)": 122.85592369999996,
+      "avg": 77.70948325645696,
+      "min": 19.497593,
+      "med": 84.518895
+    }
+  },
+  "latencia_ok_ramp_320": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "max": 731.320675,
+      "p(90)": 594.8286614,
+      "p(95)": 602.3797506000001,
+      "p(99)": 662.3163421300003,
+      "avg": 461.1801772986967,
+      "min": 252.128242,
+      "med": 474.048667
+    }
+  },
+  "latencia_sustain_320": {
+    "values": {
+      "p(99)": 1291.79295868,
+      "avg": 620.4735043286303,
+      "min": 507.406562,
+      "med": 602.817909,
+      "max": 1367.504615,
+      "p(90)": 662.7054868,
+      "p(95)": 677.0324798
+    },
+    "type": "trend",
+    "contains": "time"
+  },
+  "data_sent": {
+    "type": "counter",
+    "contains": "data",
+    "values": {
+      "count": 10913929362,
+      "rate": 33856988.31320063
+    }
+  },
+  "resp_ok_ramp_40": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 5173,
+      "rate": 16.04758421416901
+    }
+  },
+  "latencia_ok_ramp_1280": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(90)": 2294.321291,
+      "p(95)": 2367.5765410999998,
+      "p(99)": 2483.8549995400003,
+      "avg": 1841.633020678269,
+      "min": 1200.735655,
+      "med": 1823.111152,
+      "max": 2491.308913
+    }
+  },
+  "latencia_ramp_640": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "max": 1296.794472,
+      "p(90)": 1193.874985,
+      "p(95)": 1208.867028,
+      "p(99)": 1278.054788,
+      "avg": 918.2256754638961,
+      "min": 530.487019,
+      "med": 910.551881
+    }
+  },
+  "resp_ok_sustain_20": {
+    "values": {
+      "count": 15101,
+      "rate": 46.84604083088464
+    },
+    "type": "counter",
+    "contains": "default"
+  },
+  "latencia_ramp_10": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "min": 2.306106,
+      "med": 4.43347,
+      "max": 79.304582,
+      "p(90)": 11.363406,
+      "p(95)": 52.920196000000004,
+      "p(99)": 67.26705100000001,
+      "avg": 9.0330044243258
+    }
+  },
+  "resp_ok_ramp_320": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 5370,
+      "rate": 16.658713943569996
+    }
+  },
+  "erros_ramp_160": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 5252
+    }
+  },
+  "latencia_ok_sustain_320": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "avg": 620.4735043286303,
+      "min": 507.406562,
+      "med": 602.817909,
+      "max": 1367.504615,
+      "p(90)": 662.7054868,
+      "p(95)": 677.0324798,
+      "p(99)": 1291.79295868
+    }
+  },
+  "http_req_connecting": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "avg": 0.001761334617279794,
+      "min": 0,
+      "med": 0,
+      "max": 19.630932,
+      "p(90)": 0,
+      "p(95)": 0,
+      "p(99)": 0
+    }
+  },
+  "http_req_blocked": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "avg": 0.006452611919670246,
+      "min": 0.000512,
+      "med": 0.00263,
+      "max": 29.040819,
+      "p(90)": 0.004568,
+      "p(95)": 0.005790350000000006,
+      "p(99)": 0.03947591999999992
+    }
+  },
+  "latencia_ramp_160": {
+    "contains": "time",
+    "values": {
+      "p(99)": 366.77826601,
+      "avg": 231.75585272277257,
+      "min": 100.890886,
+      "med": 215.414208,
+      "max": 378.426017,
+      "p(90)": 299.0893778,
+      "p(95)": 304.57988819999997
+    },
+    "type": "trend"
+  },
+  "resp_ok_ramp_160": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 5252,
+      "rate": 16.29265654220291
+    }
+  },
+  "latencia_sustain_10": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(95)": 70.26306545,
+      "p(99)": 76.50562593000001,
+      "avg": 19.27087069449477,
+      "min": 2.688628,
+      "med": 8.3174005,
+      "max": 86.847275,
+      "p(90)": 66.1771007
+    }
+  },
+  "erros_sustain_80": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 15395
+    }
+  },
+  "http_req_receiving": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "min": 0.007417,
+      "med": 0.035946,
+      "max": 8.442319,
+      "p(90)": 0.077584,
+      "p(95)": 0.10284010000000003,
+      "p(99)": 0.4793981899999975,
+      "avg": 0.05701932914297911
+    }
+  },
+  "latencia_ok_ramp_40": {
+    "contains": "time",
+    "values": {
+      "p(95)": 98.4399404,
+      "p(99)": 115.00325699999999,
+      "avg": 57.34152856698241,
+      "min": 7.683516,
+      "med": 72.613115,
+      "max": 155.344288,
+      "p(90)": 92.77717840000001
+    },
+    "type": "trend"
+  },
+  "erros_sustain_160": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 15256
+    }
+  },
+  "tempo_total_ramp_80": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "max": 222.17020699999998,
+      "p(90)": 168.358553,
+      "p(95)": 177.88063540000002,
+      "p(99)": 196.7493118000002,
+      "avg": 116.19810350495642,
+      "min": 22.850578,
+      "med": 109.62714700000001
+    }
+  },
+  "latencia_ramp_320": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "avg": 461.1801772986967,
+      "min": 252.128242,
+      "med": 474.048667,
+      "max": 731.320675,
+      "p(90)": 594.8286614,
+      "p(95)": 602.3797506000001,
+      "p(99)": 662.3163421300003
+    }
+  },
+  "resp_ok_sustain_640": {
+    "type": "counter",
+    "contains": "default",
+    "values": {
+      "count": 15699,
+      "rate": 48.701145288660214
+    }
+  },
+  "erros_ramp_320": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 5370
+    }
+  },
+  "vus_max": {
+    "type": "gauge",
+    "contains": "default",
+    "values": {
+      "value": 1280,
+      "min": 1280,
+      "max": 1280
+    }
+  },
+  "erros_sustain_20": {
+    "type": "rate",
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 15101
+    }
+  },
+  "tempo_total_sustain_320": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(95)": 677.0347322,
+      "p(99)": 1291.7957087200002,
+      "avg": 620.4777434331672,
+      "min": 507.408583,
+      "med": 602.820758,
+      "max": 1367.506664,
+      "p(90)": 662.708605
+    }
+  },
+  "iteration_duration": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "p(90)": 2213.7230113000005,
+      "p(95)": 2419.58437755,
+      "p(99)": 2502.17080123,
+      "avg": 583.5031414200263,
+      "min": 2.432524,
+      "med": 199.00906750000001,
+      "max": 2659.245153
+    }
+  },
+  "tempo_total_ramp_20": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "med": 12.0834115,
+      "max": 95.318657,
+      "p(90)": 74.8545832,
+      "p(95)": 78.88284294999998,
+      "p(99)": 85.70366178999997,
+      "avg": 28.181876204879963,
+      "min": 3.4303969999999997
+    }
+  },
+  "latencia_ramp_40": {
+    "type": "trend",
+    "contains": "time",
+    "values": {
+      "max": 155.344288,
+      "p(90)": 92.77717840000001,
+      "p(95)": 98.4399404,
+      "p(99)": 115.00325699999999,
+      "avg": 57.34152856698241,
+      "min": 7.683516,
+      "med": 72.613115
+    }
+  },
+  "resp_ok_sustain_160": {
+    "values": {
+      "rate": 47.32687894284988,
+      "count": 15256
+    },
+    "type": "counter",
+    "contains": "default"
+  },
+  "latencia_ramp_1280": {
+    "values": {
+      "avg": 1841.633020678269,
+      "min": 1200.735655,
+      "med": 1823.111152,
+      "max": 2491.308913,
+      "p(90)": 2294.321291,
+      "p(95)": 2367.5765410999998,
+      "p(99)": 2483.8549995400003
+    },
+    "type": "trend",
+    "contains": "time"
+  },
+  "erros_ramp_20": {
+    "values": {
+      "fails": 5164,
+      "rate": 0,
+      "passes": 0
+    },
+    "type": "rate",
+    "contains": "default"
+  },
+  "erros_ramp_80": {
+    "contains": "default",
+    "values": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 5145
+    },
+    "type": "rate"
+  },
+  "_meta": {
+    "inicio_epoch_ms": 1792912767550.1846,
+    "duracao_ms": 322353.815438,
+    "vu_levels": [
+      10,
+      20,
+      40,
+      80,
+      160,
+      320,
+      640,
+      1280
+    ],
+    "ramp_s": 10,
+    "sustain_s": 30
+  }
+}
