@@ -1,0 +1,50 @@
+{
+  "data": "2026-10-24T07:09:17.940Z",
+  "host": {
+    "nome": "MSI",
+    "so": "Windows_NT 10.0.26200",
+    "cpus": 12,
+    "modeloCpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "memoriaGiB": 15.7
+  },
+  "docker": {
+    "versao": "29.8.0",
+    "compose": "5.5.1",
+    "vmCpus": 6,
+    "vmMemoriaGiB": 11.68
+  },
+  "nodeDoRunner": "v24.21.0",
+  "versoesConfiguradas": {
+    "node": "24.21.0",
+    "bun": "1.4.2",
+    "postgres": "16.13",
+    "k6": "2.3.0"
+  },
+  "versoesNasImagens": {
+    "node": "v24.21.0",
+    "bun": "1.4.2",
+    "k6": "k6 v2.3.0 (commit/e088784614, go1.27.1, linux/amd64)",
+    "postgres": "postgres (PostgreSQL) 16.13"
+  },
+  "gitCommit": "d50cfc454562bc29f5812e6879952425c89c7f65",
+  "parametros": {
+    "shuffle": true,
+    "vus": null,
+    "scenarios": [
+      "B"
+    ],
+    "payloads": [
+      "pequeno",
+      "medio",
+      "grande"
+    ],
+    "runtimes": [
+      "node",
+      "bun",
+      "bunpg"
+    ],
+    "gomemlimit": "5000MiB",
+    "cooldownS": 30,
+    "nodeHeapMb": null
+  }
+}
