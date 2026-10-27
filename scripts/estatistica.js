@@ -152,6 +152,7 @@ function welchTTest(referencia, alternativa) {
     t: +t.toFixed(3),
     df: +graus_liberdade.toFixed(2),
     p: p !== null ? +p.toFixed(4) : null,
+    p_bruto: p,
     significativo_5pct: p !== null ? p < 0.05 : null,
     dif: +diferenca.toFixed(4),
     dif_ic95_lo: margem !== null ? +(diferenca - margem).toFixed(4) : null,

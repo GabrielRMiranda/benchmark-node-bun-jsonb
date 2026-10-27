@@ -3,7 +3,7 @@ const path = require('path');
 const { resumoAmostra, welchTTest, holm, contrasteWelch } = require('./estatistica');
 
 const margem_janela_s = 2;
-const margem_equivalencia_pct = 10;
+const margem_equivalencia_pct = 5;
 const classes_resposta = ['ok', 'timeout', 'conexao', 'http_4xx', 'http_5xx'];
 const runtimes = ['node', 'bun', 'bunpg'];
 const ordem_payloads = ['pequeno', 'medio', 'grande'];
@@ -179,8 +179,6 @@ function lerTexto(arquivo) {
   }
 }
 
-// Erro fatal do runtime registrado no log da API. O tempo vem do último registro de GC do V8,
-// em ms desde o início do processo (alguns segundos antes do início do teste de carga).
 function erroFatalNoLog(log) {
   if (!log || !/FATAL ERROR/.test(log)) return null;
   const tempos = [...log.matchAll(/\]\s+(\d+) ms:/g)].map((achado) => Number(achado[1]));
@@ -214,7 +212,6 @@ function gerarLinhasDeMortes(repeticoes) {
       const log = lerTexto(path.join(pasta_base, repeticao, 'logs', `api_${entrada.rodada}.log`));
       const fatal = erroFatalNoLog(log);
       const saiu = /Status=exited/.test(estado);
-      // Depois do erro fatal o processo pode ficar travado, sem atender, com o contêiner ainda de pé.
       const morreu = saiu || fatal !== null;
       const travado = !saiu && fatal !== null;
       const causa = causaDaMorte(estado, log, fatal, morreu);
@@ -288,7 +285,7 @@ function compararRuntimes(observacoes) {
         dif_rel_pct: emPercentual(teste.dif),
         dif_rel_ic95_lo_pct: limite_inferior,
         dif_rel_ic95_hi_pct: limite_superior,
-        equivalente_10pct: limite_inferior === null || limite_superior === null
+        equivalente_5pct: limite_inferior === null || limite_superior === null
           ? null
           : limite_inferior > -margem_equivalencia_pct && limite_superior < margem_equivalencia_pct,
       });
@@ -303,7 +300,7 @@ function ajustarPorFamilia(linhas, chaveDaFamilia, campo_p = 'p') {
     (familias[chaveDaFamilia(linha)] ??= []).push(posicao);
   });
   for (const posicoes of Object.values(familias)) {
-    const ajustados = holm(posicoes.map((posicao) => linhas[posicao][campo_p]));
+    const ajustados = holm(posicoes.map((posicao) => linhas[posicao].p_bruto ?? linhas[posicao][campo_p]));
     posicoes.forEach((posicao, ordem) => {
       linhas[posicao].p_holm = ajustados[ordem] === null ? null : +ajustados[ordem].toFixed(4);
       linhas[posicao].significativo_holm_5pct = ajustados[ordem] === null ? null : ajustados[ordem] < 0.05;
@@ -319,7 +316,7 @@ function gerarLinhasDeTestes(testes) {
   const colunas = [
     'cenario', 'payload', 'vus', 'metrica', 'comparacao', 'ref', 'alt', 'media_ref', 'media_alt', 't', 'df', 'p', 'p_holm',
     'significativo_5pct', 'significativo_holm_5pct', 'dif', 'dif_ic95_lo', 'dif_ic95_hi', 'dif_rel_pct',
-    'dif_rel_ic95_lo_pct', 'dif_rel_ic95_hi_pct', 'equivalente_10pct',
+    'dif_rel_ic95_lo_pct', 'dif_rel_ic95_hi_pct', 'equivalente_5pct',
   ];
   return [colunas.join(','), ...testes.map((teste) => colunas.map((coluna) => teste[coluna]).join(','))];
 }
@@ -418,6 +415,7 @@ function contrasteDeRazoes({ ref_de, alt_de, ref_para, alt_para }) {
     t: contraste.t,
     df: contraste.df,
     p: contraste.p,
+    p_bruto: contraste.p,
   };
 }
 
@@ -452,7 +450,6 @@ function calcularInteracoes(observacoes, payloads) {
     }
   }
 
-  // Payload menor → payload seguinte, dentro de cada cenário e nível de concorrência.
   for (const { referencia, alternativa, nome, cenarios } of comparacoes) {
     for (const cenario of cenarios) {
       for (let i = 0; i + 1 < payloads.length; i++) {
@@ -512,7 +509,6 @@ function calcularDecomposicao(observacoes, payloads) {
         }
 
         for (const { referencia, alternativa, nome } of comparacoes) {
-          // Bun.sql × pg compartilham a mesma base no Cenário A; a comparação deles já está em teste_hipotese.csv.
           if (base_no_cenario_A[referencia] === base_no_cenario_A[alternativa]) continue;
           const grupos = [
             valoresDe('cenarioA', payload, vus, metrica, base_no_cenario_A[referencia]),
@@ -521,7 +517,6 @@ function calcularDecomposicao(observacoes, payloads) {
             valoresDe('cenarioB', payload, vus, metrica, alternativa),
           ];
           if (grupos.some((grupo) => grupo.length < 2)) continue;
-          // (alt_B − alt_A) − (ref_B − ref_A): positivo quando o delta do alt é maior.
           const contraste = contrasteWelch(grupos, [1, -1, -1, 1]);
           if (contraste.p === null) continue;
           diferencas.push({
@@ -532,6 +527,7 @@ function calcularDecomposicao(observacoes, payloads) {
             t: arredondar(contraste.t, 3),
             df: arredondar(contraste.df, 2),
             p: arredondar(contraste.p),
+            p_bruto: contraste.p,
           });
         }
       }

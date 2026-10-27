@@ -90,7 +90,6 @@ function montarConfiguracao(args) {
   const pasta_saida = path.resolve(raiz, args.out || path.join('resultados', `run-${os.hostname().toLowerCase()}-${carimboDeTempo()}`));
   const node_heap_mb = args['node-heap-mb'] !== undefined ? Number(args['node-heap-mb']) : null;
   if (node_heap_mb !== null && !(Number.isInteger(node_heap_mb) && node_heap_mb > 0)) falhar('--node-heap-mb deve ser um inteiro positivo (MiB)');
-  // Sempre definido, para que um NODE_OPTIONS_API do ambiente não mude as APIs sem ficar registrado.
   const env_compose = { ...process.env, RESULTS_DIR: pasta_saida, NODE_OPTIONS_API: node_heap_mb ? `--max-old-space-size=${node_heap_mb}` : '' };
   if (typeof process.getuid === 'function') {
     env_compose.K6_UID = String(process.getuid());

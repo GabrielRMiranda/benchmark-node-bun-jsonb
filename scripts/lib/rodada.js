@@ -66,7 +66,6 @@ function montarComandoK6(cfg, rodada) {
   ];
 }
 
-// Limite efetivo de heap do V8 dentro do contêiner (null para as APIs Bun).
 function limiteDeHeapNode(container) {
   if (!container.startsWith('api-node')) return null;
   const resposta = docker(['exec', container, 'node', '-e', "console.log(require('v8').getHeapStatistics().heap_size_limit)"]);

@@ -1,19 +1,4 @@
-﻿<#
-.SYNOPSIS
-
-.DESCRIPTION
-
-.PARAMETER N
-
-.PARAMETER SoPreparar
-
-.PARAMETER Restaurar
-
-.PARAMETER ManterClaude
-
-.EXAMPLE
-#>
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
   [int]$N = 0,
   [string]$OutBase = 'resultados/final',

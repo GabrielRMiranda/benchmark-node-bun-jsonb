@@ -63,8 +63,6 @@ function criarSchema(cfg) {
   consultarBanco(cfg, ['-v', 'ON_ERROR_STOP=1', '-q'], { input: fs.readFileSync(cfg.sql_inicial, 'utf8') });
 }
 
-// Confere se o documento foi gravado como objeto JSONB (e não como string JSON).
-// Motivo: o Bun.sql grava como string JSON qualquer string passada a um parâmetro jsonb.
 function verificarTipoGravado(cfg, servico) {
   const resposta = consultarBanco(cfg, ['-tAc',
     "SELECT coalesce(string_agg(DISTINCT jsonb_typeof(dados), ','), 'vazio') FROM (SELECT dados FROM produtos_node UNION ALL SELECT dados FROM produtos_bun) t;"]);

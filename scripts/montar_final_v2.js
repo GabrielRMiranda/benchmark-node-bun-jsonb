@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-// Monta resultados/final_v2: Cenário A da coleta de 10-11/10 (resultados/final)
-// + Cenário B da coleta de 24-25/10 (resultados/final_b, Bun.sql corrigido).
-// Depois: node scripts/agregar.js --out-base resultados/final_v2
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -24,9 +21,7 @@ for (const rep of repeticoes) {
     console.error(`Erro: ${rep} de final_b não está completa.`);
     process.exit(1);
   }
-  // Tudo do Cenário B (resultados, stats, logs, execucao.json, ambiente.json)
   fs.cpSync(path.join(pasta_b, rep), path.join(destino, rep), { recursive: true });
-  // Só os arquivos do Cenário A da coleta original
   for (const runtime of ['node', 'bun']) {
     const origem = path.join(pasta_a, rep, runtime);
     const alvo = path.join(destino, rep, runtime);

@@ -61,7 +61,7 @@ node scripts/agregar.js --out-base resultados/final
 `agregar.js` grava em `resultados/final/`:
 
 - `agregado.json` e `agregado.csv`: média, desvio padrão e IC de 95% por condição e métrica
-- `testes.json` e `teste_hipotese.csv`: teste t de Welch, p ajustado por Holm, diferença relativa com IC de 95% e marca de equivalência (±10%) nas comparações `bun_vs_node`, `bunpg_vs_node` e `bunsql_vs_bunpg`
+- `testes.json` e `teste_hipotese.csv`: teste t de Welch, p ajustado por Holm (calculado sobre o p sem arredondamento), diferença relativa com IC de 95% e marca de equivalência (±5%, coluna `equivalente_5pct`) nas comparações `bun_vs_node`, `bunpg_vs_node` e `bunsql_vs_bunpg`
 - `brutos.csv`: uma linha por repetição
 - `oom.csv`: quais rodadas terminaram com o contêiner da API morto e com qual código
 - `saturacao.csv` e `saturacao_resumo.csv`: ponto de saturação de cada execução e o resumo por condição (mínimo, mediana, máximo e o ponto na curva das médias). Critério (seção 3.6.1): primeiro estágio com erro ≥ 1%, ou com vazão útil < 1,05 × a do estágio anterior e P99 das respostas 201 > 1,5 × o do estágio anterior. O limiar de 1,5 (e não 2) vem do modelo fechado: com Z = 0, R = N/X, então dobrar os VUs com a vazão parada já faz a latência média crescer ~1,9×. As colunas `vus_erro_1pct_*` trazem, em separado, o primeiro estágio com erro ≥ 1%
